@@ -1,0 +1,240 @@
+{
+  "namespaces": {
+    "garage": {
+      "namespaces": {
+        "workshop": {
+          "namespaces": {},
+          "commands": [
+            {
+              "path": "garage/workshop/power.ts",
+              "className": "DoorCommand",
+              "command": "power",
+              "aliases": [],
+              "help": "",
+              "documentation": "TBD",
+              "flags": [
+                {
+                  "name": "status",
+                  "aliases": [],
+                  "invertedAliases": [],
+                  "help": "",
+                  "defaultValue": false,
+                  "invertable": false
+                }
+              ],
+              "options": [],
+              "params": [
+                {
+                  "name": "action",
+                  "help": "`up` or `down` to power on or off",
+                  "optional": true,
+                  "multiple": false
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "commands": [
+        {
+          "path": "garage/door.ts",
+          "className": "DoorCommand",
+          "command": "door",
+          "aliases": [],
+          "help": "",
+          "documentation": "TBD",
+          "flags": [
+            {
+              "name": "check",
+              "aliases": [
+                "c"
+              ],
+              "invertedAliases": [],
+              "help": "",
+              "defaultValue": false,
+              "invertable": false
+            }
+          ],
+          "options": [],
+          "params": [
+            {
+              "name": "action",
+              "help": "",
+              "optional": false,
+              "multiple": false
+            }
+          ]
+        },
+        {
+          "path": "garage/lights.ts",
+          "className": "DoorCommand",
+          "command": "lights",
+          "aliases": [],
+          "help": "",
+          "documentation": "TBD",
+          "flags": [
+            {
+              "name": "toggle",
+              "aliases": [],
+              "invertedAliases": [],
+              "help": "",
+              "defaultValue": false,
+              "invertable": false
+            },
+            {
+              "name": "on",
+              "aliases": [],
+              "invertedAliases": [],
+              "help": "",
+              "defaultValue": false,
+              "invertable": false
+            },
+            {
+              "name": "off",
+              "aliases": [],
+              "invertedAliases": [],
+              "help": "",
+              "defaultValue": false,
+              "invertable": false
+            },
+            {
+              "name": "all",
+              "aliases": [],
+              "invertedAliases": [],
+              "help": "",
+              "defaultValue": false,
+              "invertable": false
+            }
+          ],
+          "options": [],
+          "params": []
+        }
+      ]
+    }
+  },
+  "commands": [
+    {
+      "path": "schedule.ts",
+      "className": "ScheduleCommand",
+      "command": "schedule",
+      "aliases": [
+        "s"
+      ],
+      "help": "",
+      "documentation": "TBD",
+      "flags": [
+        {
+          "name": "update",
+          "aliases": [
+            "u",
+            "replace"
+          ],
+          "invertedAliases": [],
+          "help": "Update an existing schedule for this named command",
+          "defaultValue": false,
+          "invertable": false
+        },
+        {
+          "name": "delete",
+          "aliases": [
+            "d",
+            "remove"
+          ],
+          "invertedAliases": [],
+          "help": "Delete any existing schedule for this named command",
+          "defaultValue": false,
+          "invertable": false
+        }
+      ],
+      "options": [
+        {
+          "name": "floor",
+          "aliases": [
+            "f"
+          ],
+          "help": "Name of the floor",
+          "optional": true,
+          "multiple": false
+        },
+        {
+          "name": "name",
+          "aliases": [
+            "n"
+          ],
+          "help": "Name of the scheduled item",
+          "optional": false,
+          "multiple": true
+        }
+      ],
+      "params": [
+        {
+          "name": "what",
+          "help": "The command to schedule",
+          "optional": false,
+          "multiple": false
+        },
+        {
+          "name": "when",
+          "help": "The schedule for when to run the command",
+          "optional": true,
+          "multiple": false
+        }
+      ]
+    },
+    {
+      "path": "status.ts",
+      "className": "StatusCommand",
+      "command": "status",
+      "aliases": [],
+      "help": "Get the status of all smart devices",
+      "documentation": "TBD",
+      "flags": [
+        {
+          "name": "lights",
+          "aliases": [
+            "l"
+          ],
+          "invertedAliases": [
+            "no-lights",
+            "L"
+          ],
+          "help": "Include lights",
+          "defaultValue": false,
+          "invertable": true
+        },
+        {
+          "name": "doors",
+          "aliases": [
+            "d"
+          ],
+          "invertedAliases": [
+            "no-doors",
+            "D"
+          ],
+          "help": "Include doors",
+          "defaultValue": false,
+          "invertable": true
+        },
+        {
+          "name": "verbose",
+          "aliases": [
+            "v"
+          ],
+          "invertedAliases": [],
+          "help": "Show detailed status information",
+          "defaultValue": false,
+          "invertable": false
+        }
+      ],
+      "options": [],
+      "params": [
+        {
+          "name": "devices",
+          "help": "Specify name(s) of devices to check their status",
+          "optional": true,
+          "multiple": true
+        }
+      ]
+    }
+  ]
+}

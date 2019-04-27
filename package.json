@@ -13,6 +13,7 @@
     "build": "tsc -p . && node dist/build.js -p",
     "build-dev": "tsc -p . && node dist/build.js",
     "build-watch": "nodemon -e ts,json --watch src --exec \"tsc -p . && node dist/build.js\"",
+    "update-test-sample": "ts-node src/test/sample-cli/rebuildSample.ts",
     "test": "jest"
   },
   "devDependencies": {
