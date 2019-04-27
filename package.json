@@ -1,0 +1,26 @@
+{
+  "name": "oo-cli",
+  "version": "0.0.0",
+  "description": "A typescript-first object-oriented command line interface framework",
+  "repository": "https://github.com/levilansing/oo-cli",
+  "license": "MIT",
+  "author": "Levi Lansing",
+  "main": "./dist/index.js",
+  "bin": {
+    "oo-cli": "./dist/index.js"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "devDependencies": {
+    "@types/glob": "^7.1.1",
+    "@types/jest": "^24.0.11",
+    "@types/node": "^11.13.7",
+    "jest": "^24.7.1",
+    "ts-jest": "^24.0.2",
+    "tslint": "^5.16.0",
+    "typescript": "^3.4.5"
+  },
+  "dependencies": {
+  }
+}
