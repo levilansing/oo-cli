@@ -10,17 +10,24 @@
     "oo-cli": "./dist/index.js"
   },
   "scripts": {
+    "build": "tsc -p . && node dist/build.js -p",
+    "build-dev": "tsc -p . && node dist/build.js",
+    "build-watch": "nodemon -e ts,json --watch src --exec \"tsc -p . && node dist/build.js\"",
     "test": "jest"
   },
   "devDependencies": {
     "@types/glob": "^7.1.1",
     "@types/jest": "^24.0.11",
     "@types/node": "^11.13.7",
+    "callsites": "^3.1.0",
+    "glob": "^7.1.3",
     "jest": "^24.7.1",
     "ts-jest": "^24.0.2",
     "tslint": "^5.16.0",
     "typescript": "^3.4.5"
   },
   "dependencies": {
+    "marked": "^0.6.2",
+    "marked-terminal": "^3.2.0"
   }
 }
