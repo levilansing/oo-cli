@@ -1,4 +1,4 @@
-import {command, flag, help, option, param, required} from '../decorators';
+import {command, flag, help, param} from '../decorators';
 
 export class InitCommand {
   @flag('s')
@@ -6,7 +6,7 @@ export class InitCommand {
   public silent!: boolean;
 
   @param
-  @help('the name of the project (/^[\w-]+$/)')
+  @help('the name of the project (/^[\\w-]+$/)')
   public name!: string;
 
   @command

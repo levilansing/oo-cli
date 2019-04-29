@@ -19,8 +19,18 @@ export class Help {
 
     if (commandChain.length > 0) {
       const parser = new Parser(this.manifest);
-      parser.parse(commandChain);
-      // TODO
+      parser.parse([...commandChain]);
+
+      if (parser.command) {
+        this.showUsage(parser.command);
+        this.listParams(parser.command.params);
+        this.listFlags(parser.command.flags);
+        this.listOptions(parser.command.options);
+        return;
+      } else {
+        // fall through and show help for this namespace
+        this.manifest = parser.manifest;
+      }
     }
 
     // general help
@@ -36,6 +46,10 @@ export class Help {
     this.listParams(options.params);
     this.listFlags(options.flags);
     this.listOptions(options.options);
+
+    if (this.manifest.commands.length > 1) {
+      console.log(chalk.gray(`\n${executable} help <command> for help on specific commands`));
+    }
   }
 
   private showUsage(command: Partial<CommandDefinition>) {
@@ -87,7 +101,7 @@ export class Help {
   }
 
   private listNamespaces() {
-    if (this.manifest.namespaces) {
+    if (Object.keys(this.manifest.namespaces).length > 0) {
       const help: {[name: string]: string} = {};
       Object.keys(this.manifest.namespaces)
         .sort((a, b) => a.localeCompare(b))
@@ -127,9 +141,13 @@ export class Help {
   private listFlags(flags?: FlagDefinition[]) {
     if (flags && flags.length > 0) {
       const help: {[name: string]: string} = {};
-      flags.forEach((f) => (
-        help[[f.name, ...f.aliases].map(this.formatFlag).join(', ')] = chalk.gray(f.help)
-      ));
+      flags.forEach((f) => {
+        const label = [
+          [f.name, ...f.aliases].map(this.formatFlag).join(', '),
+          f.invertedAliases.map(this.formatFlag).join(', ')
+        ].join('\n')
+        help[label] = chalk.gray(f.help);
+      });
 
       console.log(`\n${chalk.bold('Flags')}:`);
       console.log(columnify(help, {showHeaders: false, columnSplitter: '   '}).replace(/(^|\n)/g, '$1  '));

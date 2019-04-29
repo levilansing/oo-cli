@@ -1,5 +1,6 @@
 import * as path from 'path';
 import {Help} from '../help/help';
+import {CommandNotFoundError} from '../parser/CommandNotFoundError';
 import {MissingCommandError} from '../parser/MissingCommandError';
 import {Parser} from '../parser/Parser';
 import {CommandDefinition, ManifestDefinition} from '../types/manifest';
@@ -32,15 +33,22 @@ export class Runner {
     } catch (e) {
       if (e instanceof MissingCommandError) {
         this.showHelp();
-      } else {
-        throw e;
+        return;
+      } else if (e instanceof CommandNotFoundError) {
+        if (e.command === 'help') {
+          const start = process.argv.indexOf('help');
+          const query = process.argv.slice(start + 1);
+          this.showHelp(query);
+          return;
+        }
       }
+      throw e;
     }
   }
 
-  private showHelp() {
+  private showHelp(query?: string[]) {
     const help = new Help(this.manifest);
-    help.show();
+    help.show(query);
   }
 
   private instantiateCommand(command: CommandDefinition) {
