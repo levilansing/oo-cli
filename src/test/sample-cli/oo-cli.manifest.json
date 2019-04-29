@@ -19,7 +19,7 @@
                   "invertedAliases": [],
                   "help": "",
                   "defaultValue": false,
-                  "invertable": false
+                  "invertible": false
                 }
               ],
               "options": [],
@@ -52,7 +52,7 @@
               "invertedAliases": [],
               "help": "",
               "defaultValue": false,
-              "invertable": false
+              "invertible": false
             }
           ],
           "options": [],
@@ -79,7 +79,7 @@
               "invertedAliases": [],
               "help": "",
               "defaultValue": false,
-              "invertable": false
+              "invertible": false
             },
             {
               "name": "on",
@@ -87,7 +87,7 @@
               "invertedAliases": [],
               "help": "",
               "defaultValue": false,
-              "invertable": false
+              "invertible": false
             },
             {
               "name": "off",
@@ -95,7 +95,7 @@
               "invertedAliases": [],
               "help": "",
               "defaultValue": false,
-              "invertable": false
+              "invertible": false
             },
             {
               "name": "all",
@@ -103,7 +103,7 @@
               "invertedAliases": [],
               "help": "",
               "defaultValue": false,
-              "invertable": false
+              "invertible": false
             }
           ],
           "options": [],
@@ -132,7 +132,7 @@
           "invertedAliases": [],
           "help": "Update an existing schedule for this named command",
           "defaultValue": false,
-          "invertable": false
+          "invertible": false
         },
         {
           "name": "delete",
@@ -143,7 +143,7 @@
           "invertedAliases": [],
           "help": "Delete any existing schedule for this named command",
           "defaultValue": false,
-          "invertable": false
+          "invertible": false
         }
       ],
       "options": [
@@ -200,7 +200,7 @@
           ],
           "help": "Include lights",
           "defaultValue": false,
-          "invertable": true
+          "invertible": true
         },
         {
           "name": "doors",
@@ -213,7 +213,7 @@
           ],
           "help": "Include doors",
           "defaultValue": false,
-          "invertable": true
+          "invertible": true
         },
         {
           "name": "verbose",
@@ -223,7 +223,7 @@
           "invertedAliases": [],
           "help": "Show detailed status information",
           "defaultValue": false,
-          "invertable": false
+          "invertible": false
         }
       ],
       "options": [],

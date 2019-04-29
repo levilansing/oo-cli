@@ -1,7 +1,7 @@
 import * as path from 'path';
-import { CommandDefinition, FlagDefinition, OptionDefinition, ParamDefinition } from '../types/manifest';
-import { FLAG_DEFAULTS, OPTION_DEFAULTS, PARAM_DEFAULTS } from '../types/manifestDefaults';
-import { CommandBuilderError } from './CommandBuilderError';
+import {CommandDefinition, FlagDefinition, OptionDefinition, ParamDefinition} from '../types/manifest';
+import {FLAG_DEFAULTS, OPTION_DEFAULTS, PARAM_DEFAULTS} from '../types/manifestDefaults';
+import {CommandBuilderError} from './CommandBuilderError';
 
 type PropDefinition = Partial<FlagDefinition | OptionDefinition | ParamDefinition>;
 
@@ -39,8 +39,8 @@ export class CommandBuilder {
     return this;
   }
 
-  public createCommand(key: PropertyKey, path: string, command: string, aliases: string[] = []) {
-    this.filePath = path;
+  public createCommand(key: PropertyKey, filePath: string, command: string, aliases: string[] = []) {
+    this.filePath = filePath;
     this.data.command = command;
     this.data.aliases = aliases;
     const lastProp = this.getProp(key);
@@ -78,9 +78,9 @@ export class CommandBuilder {
     return this;
   }
 
-  public setInvertable(key: PropertyKey, aliases: string[] = []) {
+  public setInvertible(key: PropertyKey, aliases: string[] = []) {
     const prop = this.getProp<FlagDefinition>(key);
-    prop.invertable = true;
+    prop.invertible = true;
     prop.invertedAliases = aliases;
     return this;
   }
@@ -137,7 +137,7 @@ export class CommandBuilder {
   }
 
   private prepareFlag(flag: FlagDefinition) {
-    if (flag.invertable && flag.invertedAliases.length === 0) {
+    if (flag.invertible && flag.invertedAliases.length === 0) {
       flag.invertedAliases = this.invertNames([flag.name, ...flag.aliases]);
     }
     return flag;

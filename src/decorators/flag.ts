@@ -3,11 +3,11 @@ import {PropertyDecoratorParams} from '../types/decorators';
 
 export function flag(...aliases: string[] | PropertyDecoratorParams) {
   let actualAliases: string[] = [];
-  const decorator = (target: any, key: PropertyKey, _descriptor?: PropertyDescriptor) => {
+  const decorator = (target: any, key: PropertyKey, descriptor?: PropertyDescriptor): any => {
     Manifest.getCommandBuilder(target.constructor)
       .setAliases(key, actualAliases)
       .createFlag(key, key.toString());
-    return target;
+    return descriptor;
   };
 
   if (aliases.length < 2 || aliases.every((item) => typeof item === 'string')) {

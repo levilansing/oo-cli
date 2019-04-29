@@ -1,14 +1,14 @@
-import {command, flag, help, invertable, multiple, optional, param} from '../../decorators';
+import { command, flag, help, invertible, multiple, optional, param } from '../../decorators';
 
 export class StatusCommand {
   @flag('l')
   @help('Include lights')
-  @invertable
+  @invertible
   public lights?: boolean;
 
   @flag('d')
   @help('Include doors')
-  @invertable
+  @invertible
   public doors?: boolean;
 
   @flag('v')

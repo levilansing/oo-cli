@@ -33,5 +33,11 @@ if (configPath) {
 console.log('Building manifest from source files...');
 const manifestPath = path.join(basePath, ooCliConfig.manifestPath, 'oo-cli.manifest.json');
 const manifest = buildManifest(ooCliConfig, path.dirname(manifestPath));
+
+// populate manifest with package information
+// tslint:disable-next-line:no-var-requires
+const {version, name, license, bin} = require(path.join(rootPath, 'package.json'));
+manifest.package = {version, name, license, executable: Object.keys(bin || {})[0] || name};
+
 fs.writeFileSync(manifestPath, JSON.stringify(manifest, null, inProduction ? 0 : 2));
 console.log(`Wrote manifest to ${manifestPath}`);

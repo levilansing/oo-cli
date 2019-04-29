@@ -1,6 +1,6 @@
 import {Manifest} from '../manifest/Manifest';
 
-export function multiple(target: any, key: PropertyKey, _descriptor?: PropertyDescriptor) {
+export function multiple(target: any, key: PropertyKey, descriptor?: PropertyDescriptor): any {
   Manifest.getCommandBuilder(target.constructor).setMultiple(key, true);
-  return target;
+  return descriptor;
 }

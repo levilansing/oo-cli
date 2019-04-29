@@ -2,7 +2,7 @@ export * from './command';
 export * from './defaultValue';
 export * from './flag';
 export * from './help';
-export * from './invertable';
+export * from './invertible';
 export * from './multiple';
 export * from './namespace';
 export * from './option';

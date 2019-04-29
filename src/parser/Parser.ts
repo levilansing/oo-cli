@@ -22,8 +22,15 @@ export class Parser {
 
   public parse(args: string[] = process.argv.slice(2)) {
     this.parseOutNamespace(args);
-    this.command = this.getCommand(args.shift());
+    this.command = this.manifest.commands.find((c) => c.command === '');
+    if (!this.command) {
+      this.command = this.getCommand(args.shift());
+    }
     this.parseArgs(this.command, args);
+    return {
+      command: this.command,
+      commandConfig: this.commandConfig
+    };
   }
 
   private parseOutNamespace(args: string[]) {
@@ -73,7 +80,7 @@ export class Parser {
         this.parseFlagsOrOption(arg).forEach(({name, value}) => {
           const {flag, inverted} = this.findFlag(name, command.flags);
           if (flag) {
-            const flagValue = flag.invertable ? (inverted ? 'false' : 'true') : (value  || 'true');
+            const flagValue = flag.invertible ? (inverted ? 'false' : 'true') : (value  || 'true');
             this.setConfig(flag.name, flagValue);
             canBeParam = !seenParam;
             return;
@@ -123,7 +130,7 @@ export class Parser {
       if (f.name === name || f.aliases.includes(name)) {
         return true;
       }
-      return f.invertable && (inverted = f.invertedAliases.includes(name));
+      return f.invertible && (inverted = f.invertedAliases.includes(name));
     });
 
     return {flag, inverted};

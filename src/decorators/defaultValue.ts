@@ -1,10 +1,11 @@
 import {Manifest} from '../manifest/Manifest';
 
 export function defaultValue(value?: boolean | string) {
-  return (target: any, key: PropertyKey, _descriptor?: PropertyDescriptor) => {
+  return (target: any, key: PropertyKey, descriptor?: PropertyDescriptor): any => {
     Manifest.getCommandBuilder(target.constructor)
       .setOptional(key, true)
       .setDefaultValue(key, value);
-    return target;
+
+    return descriptor;
   };
 }

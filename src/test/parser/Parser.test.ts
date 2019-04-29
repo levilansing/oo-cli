@@ -1,11 +1,11 @@
 import 'jest';
-import {CommandNotFoundError} from '../../parser/CommandNotFoundError';
-import {ExtraneousParamError} from '../../parser/ExtraneousParamError';
-import {MalformedOptionError} from '../../parser/MalformedOptionError';
-import {MissingCommandError} from '../../parser/MissingCommandError';
-import {Parser} from '../../parser/Parser';
-import {UnknownOptionError} from '../../parser/UnknownOptionError';
-import {ManifestDefinition} from '../../types/manifest';
+import { CommandNotFoundError } from '../../parser/CommandNotFoundError';
+import { ExtraneousParamError } from '../../parser/ExtraneousParamError';
+import { MalformedOptionError } from '../../parser/MalformedOptionError';
+import { MissingCommandError } from '../../parser/MissingCommandError';
+import { Parser } from '../../parser/Parser';
+import { UnknownOptionError } from '../../parser/UnknownOptionError';
+import { ManifestDefinition } from '../../types/manifest';
 import * as sampleManifest from '../sample-cli/oo-cli.manifest.json';
 
 const manifest: ManifestDefinition = sampleManifest as any;
@@ -195,7 +195,7 @@ describe('Parser', () => {
       expect(result.flag!.name).toEqual('verbose');
     });
 
-    it('finds an invertable flag', () => {
+    it('finds an invertible flag', () => {
       const result = parser['findFlag']('l', statusCommand.flags);
       expect(result.flag!.name).toEqual('lights');
       expect(result.inverted).toBeFalsy();

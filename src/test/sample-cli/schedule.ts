@@ -29,6 +29,7 @@ export class ScheduleCommand {
   public when!: string;
 
   @command('s')
+  @help('Schedule or unschedule a command to run at a later time')
   public schedule() {
     // no-op
   }

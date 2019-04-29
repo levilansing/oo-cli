@@ -1,8 +1,17 @@
 export interface ManifestDefinition {
+  package?: PackageDefinition;
   namespaces: {
     [namespace: string]: ManifestDefinition;
   };
   commands: CommandDefinition[];
+  help?: string;
+}
+
+export interface PackageDefinition {
+  version: string;
+  name: string;
+  executable: string;
+  license: string;
 }
 
 export interface CommandDefinition {
@@ -23,7 +32,7 @@ export interface FlagDefinition {
   invertedAliases: string[];
   help: string;
   defaultValue?: boolean;
-  invertable: boolean;
+  invertible: boolean;
 }
 
 export interface OptionDefinition {

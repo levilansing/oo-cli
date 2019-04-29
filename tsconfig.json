@@ -1,7 +1,9 @@
 {
-  "include": ["./src"],
+  "include": ["./src", "types/window-size.d.ts"],
   "exclude": ["node_modules", "dist"],
   "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {"*": ["types/*"]},
     "rootDir": "./src",
     "outDir": "./dist",
     "declaration": true,

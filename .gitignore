@@ -1,5 +1,7 @@
 .vscode/
 .idea/
+.yalc/
+yalc.lock
 node_modules/
 yarn-error.log
 /dist/

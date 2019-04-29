@@ -1,4 +1,4 @@
-import {FlagDefinition, OptionDefinition, ParamDefinition} from './manifest';
+import {FlagDefinition, OptionDefinition, PackageDefinition, ParamDefinition} from './manifest';
 
 export const FLAG_DEFAULTS: FlagDefinition = Object.freeze({
   name: '',
@@ -6,7 +6,7 @@ export const FLAG_DEFAULTS: FlagDefinition = Object.freeze({
   invertedAliases: [],
   help: '',
   defaultValue: false,
-  invertable: false
+  invertible: false
 });
 
 export const OPTION_DEFAULTS: OptionDefinition = Object.freeze({
@@ -24,4 +24,11 @@ export const PARAM_DEFAULTS: ParamDefinition = Object.freeze({
   defaultValue: undefined,
   optional: false,
   multiple: false
+});
+
+export const EMPTY_PACKAGE: PackageDefinition = Object.freeze({
+  name: '',
+  version: '',
+  license: 'unknown license',
+  executable: ''
 });
