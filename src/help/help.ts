@@ -1,12 +1,14 @@
 import chalk from 'chalk';
 import * as columnify from 'columnify';
 import * as windowSize from 'window-size';
+import {MissingCommandError} from '../parser';
 import {Parser} from '../parser/Parser';
 import {CommandDefinition, FlagDefinition, ManifestDefinition, OptionDefinition, ParamDefinition} from '../types/manifest';
 import {EMPTY_PACKAGE} from '../types/manifestDefaults';
 
 export class Help {
   private manifest: ManifestDefinition;
+  private namespace?: string[];
   private executable!: string;
   constructor(manifest: ManifestDefinition) {
     this.manifest = manifest;
@@ -19,7 +21,14 @@ export class Help {
 
     if (commandChain.length > 0) {
       const parser = new Parser(this.manifest);
-      parser.parse([...commandChain]);
+      try {
+        parser.parse([...commandChain]);
+      } catch (e) {
+        if (!(e instanceof MissingCommandError)) {
+          throw e;
+        }
+      }
+      this.namespace = parser.namespace;
 
       if (parser.command) {
         this.showUsage(parser.command);
@@ -34,12 +43,17 @@ export class Help {
     }
 
     // general help
-    let options: Partial<CommandDefinition> = this.manifest.commands[0];
+    let options: Partial<CommandDefinition> = this.manifest.commands[0] || {};
     if (this.manifest.commands.length > 1) {
       options = this.getCommonOptions(this.manifest.commands);
     }
 
     this.showUsage(options);
+
+    if (options.help) {
+      console.log(options.help);
+    }
+
     this.listNamespaces();
     this.listCommands(this.manifest.commands);
 
@@ -85,7 +99,7 @@ export class Help {
     });
 
     // Format the output so that we don't word wrap in the middle of an option if possible
-    let line = `usage: ${this.executable} `;
+    let line = `Usage: ${[this.executable, ...(this.namespace || [])].join(' ')} `;
     const indentation = ' '.repeat(line.length);
     const width = windowSize.get().width - line.length;
     line += cmdParts.shift();
@@ -174,6 +188,10 @@ export class Help {
   }
 
   private getCommonOptions(commands: CommandDefinition[]): Partial<CommandDefinition> {
+    if (commands.length === 1) {
+      return commands[0];
+    }
+
     const flags: FlagDefinition[][] = [];
     const options: OptionDefinition[][] = [];
     const params: ParamDefinition[][] = [];

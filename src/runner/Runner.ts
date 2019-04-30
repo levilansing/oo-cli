@@ -4,9 +4,10 @@ import {CommandNotFoundError} from '../parser/CommandNotFoundError';
 import {MissingCommandError} from '../parser/MissingCommandError';
 import {Parser} from '../parser/Parser';
 import {CommandDefinition, ManifestDefinition} from '../types/manifest';
+import './ErrorHandler';
 import {InvalidFlagValueError} from './InvalidFlagValueError';
 import {MissingOptionError} from './MissingOptionError';
-import {MissingParamError} from './MissingOptionError.1';
+import {MissingParamError} from './MissingParamError';
 
 export class Runner {
   private manifest: ManifestDefinition;
