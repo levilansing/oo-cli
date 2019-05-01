@@ -17,6 +17,7 @@ export interface PackageDefinition {
 export interface CommandDefinition {
   path: string;
   className: string;
+  key: string;
   command: string;
   aliases: string[];
   help: string;
@@ -28,6 +29,7 @@ export interface CommandDefinition {
 
 export interface FlagDefinition {
   name: string;
+  key: string;
   aliases: string[];
   invertedAliases: string[];
   help: string;
@@ -37,6 +39,7 @@ export interface FlagDefinition {
 
 export interface OptionDefinition {
   name: string;
+  key: string;
   aliases: string[];
   help: string;
   defaultValue?: string;
@@ -46,6 +49,7 @@ export interface OptionDefinition {
 
 export interface ParamDefinition {
   name: string;
+  key: string;
   help: string;
   defaultValue?: string;
   optional: boolean;

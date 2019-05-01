@@ -7,6 +7,7 @@ type PropDefinition = Partial<FlagDefinition | OptionDefinition | ParamDefinitio
 
 interface CommandData {
   command?: string;
+  key?: string;
   aliases?: string[];
   help?: string;
   documentation?: string;
@@ -41,6 +42,7 @@ export class CommandBuilder {
 
   public createCommand(key: PropertyKey, filePath: string, command: string, aliases: string[] = []) {
     this.filePath = filePath;
+    this.data.key = key.toString();
     this.data.command = command;
     this.data.aliases = aliases;
     const lastProp = this.getProp(key);
@@ -87,6 +89,7 @@ export class CommandBuilder {
 
   public createFlag(key: PropertyKey, name: string) {
     const prop = this.getProp<FlagDefinition>(key);
+    prop.key = key.toString();
     prop.name = name;
     this.data.flags.push(prop);
     return this;
@@ -94,6 +97,7 @@ export class CommandBuilder {
 
   public createOption(key: PropertyKey, name: string) {
     const prop = this.getProp<OptionDefinition>(key);
+    prop.key = key.toString();
     prop.name = name;
     this.data.options.push(prop);
     return this;
@@ -101,13 +105,17 @@ export class CommandBuilder {
 
   public createParam(key: PropertyKey, name: string) {
     const prop = this.getProp<ParamDefinition>(key);
+    prop.key = key.toString();
     prop.name = name;
     this.data.params.push(prop);
     return this;
   }
 
   public buildCommand(className: string, basePath: string): CommandDefinition {
-    const {command, aliases = [], help = '', flags = [], options = [], params = []} = this.data;
+    const {key, command, aliases = [], help = '', flags = [], options = [], params = []} = this.data;
+    if (!key) {
+      throw new CommandBuilderError('Attempted to build a command without a key');
+    }
     if (!command) {
       throw new CommandBuilderError('Attempted to build a command without a name');
     }
@@ -117,6 +125,7 @@ export class CommandBuilder {
     return {
       path: path.relative(basePath, this.filePath),
       className,
+      key,
       command,
       aliases,
       help,

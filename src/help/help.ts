@@ -68,6 +68,16 @@ export class Help {
 
   private showUsage(command: Partial<CommandDefinition>) {
     let cmdParts: string[] = [];
+
+    // '' signifies a root command
+    if (command.command !== '') {
+      cmdParts.push(command.command || '<command>');
+    }
+
+    (command.params || []).forEach((param) => {
+      cmdParts.push(param.optional ? `[<${param.name}>]` : `<${param.name}>`);
+    });
+
     (command.flags || []).map((flag) => {
       const option = [flag.name, ...flag.aliases, ...flag.invertedAliases].map((f) => (
         f.length === 1 ? `-${f}` : `--${f}`
@@ -88,15 +98,6 @@ export class Help {
       .forEach((option) => {
         cmdParts.push(`--${option.name}=<${option.name}>`);
       });
-
-    // '' signifies a root command
-    if (command.command !== '') {
-      cmdParts.push(command.command || '<command>');
-    }
-
-    (command.params || []).forEach((param) => {
-      cmdParts.push(param.optional ? `[<${param.name}>]` : `<${param.name}>`);
-    });
 
     // Format the output so that we don't word wrap in the middle of an option if possible
     let line = `Usage: ${[this.executable, ...(this.namespace || [])].join(' ')} `;

@@ -30,7 +30,7 @@ export class Runner {
       this.instantiateCommand(command);
       this.configureCommand(command);
 
-      this.instance[command.command]();
+      this.instance[command.key]();
     } catch (e) {
       if (e instanceof MissingCommandError) {
         this.showHelp();
@@ -65,16 +65,16 @@ export class Runner {
         if (!booleanValue && !['f', 'false'].includes(value)) {
           throw new InvalidFlagValueError(flag.name, value);
         }
-        this.instance[flag.name] = booleanValue;
+        this.instance[flag.key] = booleanValue;
       } else if (!flag.invertible) {
-        this.instance[flag.name] = false;
+        this.instance[flag.key] = false;
       }
     });
 
     command.options.forEach((option) => {
       const value = config[option.name] || option.defaultValue;
       if (value) {
-        this.instance[option.name] = value;
+        this.instance[option.key] = value;
       } else if (!option.optional) {
         throw new MissingOptionError(option.name);
       }
@@ -83,7 +83,7 @@ export class Runner {
     command.params.forEach((param) => {
       const value = config[param.name] || param.defaultValue;
       if (value) {
-        this.instance[param.name] = value;
+        this.instance[param.key] = value;
       } else if (!param.optional) {
         throw new MissingParamError(param.name);
       }

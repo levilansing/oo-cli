@@ -2,6 +2,7 @@ import {FlagDefinition, OptionDefinition, PackageDefinition, ParamDefinition} fr
 
 export const FLAG_DEFAULTS: FlagDefinition = Object.freeze({
   name: '',
+  key: '',
   aliases: [],
   invertedAliases: [],
   help: '',
@@ -11,6 +12,7 @@ export const FLAG_DEFAULTS: FlagDefinition = Object.freeze({
 
 export const OPTION_DEFAULTS: OptionDefinition = Object.freeze({
   name: '',
+  key: '',
   aliases: [],
   help: '',
   defaultValue: undefined,
@@ -20,6 +22,7 @@ export const OPTION_DEFAULTS: OptionDefinition = Object.freeze({
 
 export const PARAM_DEFAULTS: ParamDefinition = Object.freeze({
   name: '',
+  key: '',
   help: '',
   defaultValue: undefined,
   optional: false,
