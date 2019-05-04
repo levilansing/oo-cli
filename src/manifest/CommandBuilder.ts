@@ -2,6 +2,7 @@ import * as path from 'path';
 import {CommandDefinition, FlagDefinition, OptionDefinition, ParamDefinition} from '../types/manifest';
 import {FLAG_DEFAULTS, OPTION_DEFAULTS, PARAM_DEFAULTS} from '../types/manifestDefaults';
 import {CommandBuilderError} from './CommandBuilderError';
+import {ClassFunction, Manifest} from './Manifest';
 
 type PropDefinition = Partial<FlagDefinition | OptionDefinition | ParamDefinition>;
 
@@ -17,6 +18,7 @@ interface CommandData {
 }
 
 export class CommandBuilder {
+  private classFn: ClassFunction;
   private filePath: string | null = null;
   private namespacePath: string[] = [];
   private data: CommandData = {
@@ -25,6 +27,10 @@ export class CommandBuilder {
     params: []
   };
   private allProps: Map<PropertyKey, PropDefinition> = new Map();
+
+  public constructor(classFn: ClassFunction) {
+    this.classFn = classFn;
+  }
 
   public setNamespace(namespacePath: string[]) {
     this.namespacePath = namespacePath;
@@ -111,17 +117,23 @@ export class CommandBuilder {
     return this;
   }
 
-  public buildCommand(className: string, basePath: string): CommandDefinition {
+  public buildCommand(className: string, basePath: string): CommandDefinition | null {
     const {key, command, aliases = [], help = '', flags = [], options = [], params = []} = this.data;
-    if (!key) {
-      throw new CommandBuilderError('Attempted to build a command without a key');
+    let parent = Object.getPrototypeOf(this.classFn);
+    if (parent) {
+      const data = Manifest.getCommandBuilder(parent).data;
+      flags.splice(0, 0, ...data.flags);
+      options.splice(0, 0, ...data.options);
+      params.splice(0, 0, ...data.params);
     }
-    if (!command) {
-      throw new CommandBuilderError('Attempted to build a command without a name');
+    if (!key || !command) {
+      return null;
     }
     if (!this.filePath) {
       throw new CommandBuilderError('Could not locate source path of command');
     }
+
+    const uniq = (opts: PropDefinition[]) => opts.reverse().filter((o, index) => index === opts.findIndex((opt) => opt.name === o.name)).reverse();
     return {
       path: path.relative(basePath, this.filePath),
       className,
@@ -130,9 +142,9 @@ export class CommandBuilder {
       aliases,
       help,
       documentation: 'TBD',
-      flags: flags.map((f) => this.prepareFlag(Object.assign({}, FLAG_DEFAULTS, f))),
-      options: options.map((o) => Object.assign({}, OPTION_DEFAULTS, o)),
-      params: params.map((p) => Object.assign({}, PARAM_DEFAULTS, p)),
+      flags: uniq(flags).map((f) => this.prepareFlag(Object.assign({}, FLAG_DEFAULTS, f))),
+      options: uniq(options).map((o) => Object.assign({}, OPTION_DEFAULTS, o)),
+      params: uniq(params).map((p) => Object.assign({}, PARAM_DEFAULTS, p)),
     };
   }
 

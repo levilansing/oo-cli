@@ -8,6 +8,7 @@
             {
               "path": "garage/workshop/power.ts",
               "className": "DoorCommand",
+              "key": "power",
               "command": "power",
               "aliases": [],
               "help": "",
@@ -15,6 +16,7 @@
               "flags": [
                 {
                   "name": "status",
+                  "key": "status",
                   "aliases": [],
                   "invertedAliases": [],
                   "help": "",
@@ -26,6 +28,7 @@
               "params": [
                 {
                   "name": "action",
+                  "key": "action",
                   "help": "`up` or `down` to power on or off",
                   "optional": true,
                   "multiple": false
@@ -37,37 +40,9 @@
       },
       "commands": [
         {
-          "path": "garage/door.ts",
-          "className": "DoorCommand",
-          "command": "door",
-          "aliases": [],
-          "help": "",
-          "documentation": "TBD",
-          "flags": [
-            {
-              "name": "check",
-              "aliases": [
-                "c"
-              ],
-              "invertedAliases": [],
-              "help": "",
-              "defaultValue": false,
-              "invertible": false
-            }
-          ],
-          "options": [],
-          "params": [
-            {
-              "name": "action",
-              "help": "",
-              "optional": false,
-              "multiple": false
-            }
-          ]
-        },
-        {
           "path": "garage/lights.ts",
           "className": "DoorCommand",
+          "key": "lights",
           "command": "lights",
           "aliases": [],
           "help": "",
@@ -75,6 +50,7 @@
           "flags": [
             {
               "name": "toggle",
+              "key": "toggle",
               "aliases": [],
               "invertedAliases": [],
               "help": "",
@@ -83,6 +59,7 @@
             },
             {
               "name": "on",
+              "key": "on",
               "aliases": [],
               "invertedAliases": [],
               "help": "",
@@ -91,6 +68,7 @@
             },
             {
               "name": "off",
+              "key": "off",
               "aliases": [],
               "invertedAliases": [],
               "help": "",
@@ -99,6 +77,7 @@
             },
             {
               "name": "all",
+              "key": "all",
               "aliases": [],
               "invertedAliases": [],
               "help": "",
@@ -114,17 +93,92 @@
   },
   "commands": [
     {
-      "path": "schedule.ts",
-      "className": "ScheduleCommand",
-      "command": "schedule",
-      "aliases": [
-        "s"
-      ],
+      "path": "garage/garageDoor.ts",
+      "className": "GarageDoorCommand",
+      "key": "garageDoor",
+      "command": "garageDoor",
+      "aliases": [],
       "help": "",
       "documentation": "TBD",
       "flags": [
         {
+          "name": "check",
+          "key": "check",
+          "aliases": [
+            "c"
+          ],
+          "invertedAliases": [],
+          "help": "",
+          "defaultValue": false,
+          "invertible": false
+        },
+        {
+          "name": "toggle",
+          "key": "toggle",
+          "aliases": [],
+          "invertedAliases": [],
+          "help": "",
+          "defaultValue": false,
+          "invertible": false
+        }
+      ],
+      "options": [],
+      "params": [
+        {
+          "name": "action",
+          "key": "action",
+          "help": "",
+          "optional": false,
+          "multiple": false
+        }
+      ]
+    },
+    {
+      "path": "garage/interiorDoor.ts",
+      "className": "InteriorDoorCommand",
+      "key": "interiorDoor",
+      "command": "interiorDoor",
+      "aliases": [],
+      "help": "",
+      "documentation": "TBD",
+      "flags": [
+        {
+          "name": "check",
+          "key": "check",
+          "aliases": [
+            "c"
+          ],
+          "invertedAliases": [],
+          "help": "",
+          "defaultValue": false,
+          "invertible": false
+        }
+      ],
+      "options": [],
+      "params": [
+        {
+          "name": "action",
+          "key": "action",
+          "help": "",
+          "optional": false,
+          "multiple": false
+        }
+      ]
+    },
+    {
+      "path": "schedule.ts",
+      "className": "ScheduleCommand",
+      "key": "schedule",
+      "command": "schedule",
+      "aliases": [
+        "s"
+      ],
+      "help": "Schedule or unschedule a command to run at a later time",
+      "documentation": "TBD",
+      "flags": [
+        {
           "name": "update",
+          "key": "update",
           "aliases": [
             "u",
             "replace"
@@ -136,6 +190,7 @@
         },
         {
           "name": "delete",
+          "key": "delete",
           "aliases": [
             "d",
             "remove"
@@ -149,6 +204,7 @@
       "options": [
         {
           "name": "floor",
+          "key": "floor",
           "aliases": [
             "f"
           ],
@@ -158,6 +214,7 @@
         },
         {
           "name": "name",
+          "key": "name",
           "aliases": [
             "n"
           ],
@@ -169,12 +226,14 @@
       "params": [
         {
           "name": "what",
+          "key": "what",
           "help": "The command to schedule",
           "optional": false,
           "multiple": false
         },
         {
           "name": "when",
+          "key": "when",
           "help": "The schedule for when to run the command",
           "optional": true,
           "multiple": false
@@ -184,6 +243,7 @@
     {
       "path": "status.ts",
       "className": "StatusCommand",
+      "key": "status",
       "command": "status",
       "aliases": [],
       "help": "Get the status of all smart devices",
@@ -191,6 +251,7 @@
       "flags": [
         {
           "name": "lights",
+          "key": "lights",
           "aliases": [
             "l"
           ],
@@ -204,6 +265,7 @@
         },
         {
           "name": "doors",
+          "key": "doors",
           "aliases": [
             "d"
           ],
@@ -217,6 +279,7 @@
         },
         {
           "name": "verbose",
+          "key": "verbose",
           "aliases": [
             "v"
           ],
@@ -230,6 +293,7 @@
       "params": [
         {
           "name": "devices",
+          "key": "devices",
           "help": "Specify name(s) of devices to check their status",
           "optional": true,
           "multiple": true

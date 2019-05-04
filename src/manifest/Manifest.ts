@@ -12,7 +12,7 @@ export class Manifest {
 
   public static getCommandBuilder(classFn: ClassFunction) {
     if (!this.metadata.has(classFn)) {
-      this.metadata.set(classFn, new CommandBuilder());
+      this.metadata.set(classFn, new CommandBuilder(classFn));
     }
     return this.metadata.get(classFn)!;
   }
@@ -26,7 +26,10 @@ export class Manifest {
         m.namespaces[next] ? m.namespaces[next] : (m.namespaces[next] = emptyManifest()),
         manifest
       );
-      subManifest.commands.push(builder.buildCommand(key.name, basePath));
+      const cmd = builder.buildCommand(key.name, basePath);
+      if (cmd) {
+        subManifest.commands.push(cmd);
+      }
     });
 
     return manifest;

@@ -1,4 +1,4 @@
-import {command, flag, namespace, param} from '../../../decorators';
+import {flag, namespace, param} from '../../../decorators';
 
 @namespace('garage')
 export class DoorCommand {
@@ -7,9 +7,4 @@ export class DoorCommand {
 
   @param
   public action!: string;
-
-  @command
-  public door() {
-    // no-op
-  }
 }
