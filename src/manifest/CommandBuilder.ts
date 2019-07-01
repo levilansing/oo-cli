@@ -119,7 +119,7 @@ export class CommandBuilder {
 
   public buildCommand(className: string, basePath: string): CommandDefinition | null {
     const {key, command, aliases = [], help = '', flags = [], options = [], params = []} = this.data;
-    let parent = Object.getPrototypeOf(this.classFn);
+    const parent = Object.getPrototypeOf(this.classFn);
     if (parent) {
       const data = Manifest.getCommandBuilder(parent).data;
       flags.splice(0, 0, ...data.flags);
@@ -133,7 +133,9 @@ export class CommandBuilder {
       throw new CommandBuilderError('Could not locate source path of command');
     }
 
-    const uniq = (opts: PropDefinition[]) => opts.reverse().filter((o, index) => index === opts.findIndex((opt) => opt.name === o.name)).reverse();
+    const uniq = (opts: PropDefinition[]) => (
+      opts.reverse().filter((o, index) => index === opts.findIndex((opt) => opt.name === o.name)).reverse()
+    );
     return {
       path: path.relative(basePath, this.filePath),
       className,

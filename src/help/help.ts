@@ -67,7 +67,7 @@ export class Help {
   }
 
   private showUsage(command: Partial<CommandDefinition>) {
-    let cmdParts: string[] = [];
+    const cmdParts: string[] = [];
 
     // '' signifies a root command
     if (command.command !== '') {
@@ -82,7 +82,7 @@ export class Help {
       const option = [flag.name, ...flag.aliases, ...flag.invertedAliases].map((f) => (
         f.length === 1 ? `-${f}` : `--${f}`
       )).join(' | ');
-      cmdParts.push(`[${option}]`)
+      cmdParts.push(`[${option}]`);
     });
 
     // optional options
@@ -160,7 +160,7 @@ export class Help {
         const label = [
           [f.name, ...f.aliases].map(this.formatFlag).join(', '),
           f.invertedAliases.map(this.formatFlag).join(', ')
-        ].join('\n')
+        ].join('\n');
         help[label] = chalk.gray(f.help);
       });
 

@@ -11,7 +11,7 @@
         "limit": 120,
         "ignore-pattern": "^import"
       }
-    ]
+    ],
     "quotemark": [
       true,
       "single",
