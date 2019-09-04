@@ -102,7 +102,12 @@ export class Help {
     // Format the output so that we don't word wrap in the middle of an option if possible
     let line = `Usage: ${[this.executable, ...(this.namespace || [])].join(' ')} `;
     const indentation = ' '.repeat(line.length);
-    const width = windowSize.get().width - line.length;
+    let width = Number.POSITIVE_INFINITY;
+    try {
+      width = windowSize.get().width - line.length;
+    } catch (e) {
+      // headless, ignore
+    }
     line += cmdParts.shift();
     for (const part of cmdParts) {
       if (line.length + 1 + part.length > width) {
