@@ -62,7 +62,7 @@ export class Help {
     this.listOptions(options.options);
 
     if (this.manifest.commands.length > 1) {
-      console.log(chalk.gray(`\n${executable} help <command> for help on specific commands`));
+      console.log(chalk.gray(`\n${executable} <command> -h, --help for help on specific commands`));
     }
   }
 
@@ -129,7 +129,7 @@ export class Help {
           help[n] = chalk.gray(this.manifest.namespaces[n].help || '')
         ));
 
-      console.log(`\n${chalk.bold('Namespaces')}: ${chalk.gray('(`help <namespace>` for additional help)')}`);
+      console.log(`\n${chalk.bold('Namespaces')}: ${chalk.gray('(`<namespace>` -h, --help for additional help)')}`);
       console.log(columnify(help, {showHeaders: false, columnSplitter: '   '}).replace(/(^|\n)/g, '$1  '));
     }
   }
