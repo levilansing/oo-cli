@@ -1,13 +1,12 @@
 import * as path from 'path';
 import {Help} from '../help/help';
-import {CommandNotFoundError} from '../parser/CommandNotFoundError';
-import {MissingCommandError} from '../parser/MissingCommandError';
 import {Parser} from '../parser/Parser';
 import {CommandDefinition, ManifestDefinition} from '../types/manifest';
 import './ErrorHandler';
 import {InvalidFlagValueError} from './InvalidFlagValueError';
 import {MissingOptionError} from './MissingOptionError';
 import {MissingParamError} from './MissingParamError';
+import {MissingCommandError} from '../parser';
 
 export class Runner {
   private manifest: ManifestDefinition;
@@ -23,6 +22,23 @@ export class Runner {
   }
 
   public run() {
+    if (this.isHelp()) {
+      this.showHelp(process.argv.slice(2, -1));
+    } else {
+      this.runCommand();
+    }
+  }
+
+  private isHelp(): boolean {
+    const last = process.argv[process.argv.length - 1];
+    return last === '-h' || last === '--help';
+  }
+
+  private showHelp(query?: string[]) {
+    new Help(this.manifest).show(query);
+  }
+
+  private runCommand() {
     try {
       const {command, commandConfig} = this.parser.parse();
       this.commandConfig = commandConfig;
@@ -35,21 +51,9 @@ export class Runner {
       if (e instanceof MissingCommandError) {
         this.showHelp();
         return;
-      } else if (e instanceof CommandNotFoundError) {
-        if (e.command === 'help') {
-          const start = process.argv.indexOf('help');
-          const query = process.argv.slice(start + 1);
-          this.showHelp(query);
-          return;
-        }
       }
       throw e;
     }
-  }
-
-  private showHelp(query?: string[]) {
-    const help = new Help(this.manifest);
-    help.show(query);
   }
 
   private instantiateCommand(command: CommandDefinition) {
