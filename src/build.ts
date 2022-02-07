@@ -7,7 +7,7 @@ const inProduction = process.env.NODE_ENV === 'production' || ['-p', '--producti
 
 const rootPath = process.cwd();
 let {basePath} = ooCliConfig;
-if (!/^[\\/]/.test(basePath)) {
+if (!path.isAbsolute(basePath)) {
   basePath = path.join(rootPath, basePath);
 }
 configure({basePath});
@@ -21,7 +21,7 @@ if (configPath) {
   // tslint:disable-next-line:no-var-requires
   const config = require(configPath);
   if (config.basePath) {
-    if (!/^\//.test(config.basePath)) {
+    if (!path.isAbsolute(config.basePath)) {
       config.basePath = path.join(rootPath, config.basePath);
     }
   }
