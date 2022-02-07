@@ -10,10 +10,10 @@ export function buildManifest(config: OoCliConfig, basePath: string): ManifestDe
 
   config.search.forEach((pattern) => {
     let searchPath = pattern;
-    if (!/^[\\/]/.test(searchPath)) {
+    if (!path.isAbsolute(searchPath)) {
       searchPath = path.join(config.basePath, searchPath);
     }
-    if (!/^[\\/]/.test(searchPath)) {
+    if (!path.isAbsolute(searchPath)) {
       searchPath = path.join(process.cwd(), searchPath);
     }
     glob.sync(searchPath)
